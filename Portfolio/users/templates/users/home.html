@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна сторінка</title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Привіт, друже! </h1>
+
+    {% if user.is_authenticated %}
+        <p>З поверненням, {{ user.username }}!</p>
+
+        <!-- Блок кнопок -->
+        <div class="button-container">
+            <a href="{% url 'users:logout' %}">Вийти</a>
+            <a href="{% url 'projects:project_list' %}">Перейти до проєктів</a>
+        </div>
+    {% else %}
+        <a href="{% url 'users:register' %}">Зареєструватися</a>
+        <a href="{% url 'users:login' %}">Увійти</a>
+    {% endif %}
+</body>
+</html>
+

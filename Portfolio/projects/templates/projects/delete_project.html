@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Видалити проєкт</title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h2>Ви впевнені, що хочете видалити проєкт?</h2>
+    <p><strong>{{ project.title }}</strong></p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Так, видалити</button>
+        <a href="{% url 'projects:project_list' %}">Скасувати</a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вихід</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Вихід з акаунту</h1>
+
+    {% if user.is_authenticated %}
+        <p>Привіт, {{ user.username }}!</p>
+
+        <!-- Форма для виведення -->
+        <form method="POST" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Вийти</button>
+        </form>
+
+    {% else %}
+        <p>Ви не авторизовані!</p>
+        <a href="{% url 'users:register' %}">Створити користувача</a> |
+        <a href="{% url 'users:login' %}">Увійти</a>
+    {% endif %}
+</body>
+</html>
