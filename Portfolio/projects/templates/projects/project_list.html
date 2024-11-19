@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список проєктів</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -37,37 +38,127 @@
             border-radius: 10px;
             margin-bottom: 15px;
         }
+
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .top-buttons a {
+            color: rgb(194, 4, 99);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border: 2px solid rgb(194, 4, 99);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: inline-block;
+        }
+
+        .top-buttons a:hover {
+            background-color: rgb(194, 4, 99);
+            color: #fff;
+        }
+
+        .section {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+        #about-me {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+            text-align: left; /* Вирівнювання тексту */
+            gap: 20px; /* Проміжок між фото і текстом */
+        }
+
+        /* Стиль для зображення */
+        #about-me img {
+            max-width: 300px; /* Ширина зображення */
+            height: auto; /* Автоматична висота */
+            border-radius: 20px; /* Закруглені кути */
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Тінь */
+        }
+        #about-me .about-text {
+    max-width: 600px;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgb(194, 4, 99);
+    }
+
+
+         p {
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        font-size: 1.25rem;
+        line-height: 1.6;
+        color: rgb(194, 4, 99);
+    }
+
     </style>
 </head>
 <body>
+    <!-- Кнопки у верхньому меню -->
+    <div class="top-buttons">
+        <a href="#about-me" class="btn">Про мене</a>
+        <a href="#projects" class="btn">Мої проєкти</a>
+        <a href="#contacts" class="btn">Контакти</a>
+    </div>
+
     {% if user.is_authenticated %}
         <h2 class="greeting">Привіт, {{ user.username }}!</h2>
-        <h2 class="project-title">Мої проєкти (Grammy 2025 - Album of the year)</h2>
 
-        <a href="{% url 'projects:project_create' %}" >Створити новий проєкт</a>
-
-        <ul class="project-list">
-            {% for project in projects %}
-                <li class="project">
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description }}</p>
-
-                    {% if project.image %}
-                        <img src="{{ project.image.url }}" alt="{{ project.title }}" width="200">
-                    {% endif %}
-
-                    <div class="button-group">
-                        <a href="{% url 'projects:project_update' project.pk %}" class="edit-btn">Змінити</a>
-                        <a href="{% url 'projects:project_delete' project.pk %}" class="delete-btn">Видалити</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-
-
-            <a href="{% url 'users:changepass' %}">Змінити пароль</a>
-            <a href="{% url 'users:logout' %}">Вийти</a>
+        <div id="about-me" class="section">
+            <img src="/media/images/photo_2024-11-19_22-57-03.jpg" alt="Моє фото">
+            <div class="about-text">
+                <p>Мене звати Тарас, я веб-розробник  створення сайтів. У своїх роботах я завжди використовую сучасні технології та підходи.</p>
+                <p>Моя мета – зробити твій проєкт унікальним, зручним та вражаючим. Пишу чистий і підтримуваний код. Люблю навчатися новому й вирішувати складні завдання.</p>
+            </div>
         </div>
+
+        <div id="projects" class="section">
+            <h2 class="project-title">Мої проєкти (album of the year 2024)</h2>
+            <a href="{% url 'projects:project_create' %}" class="btn">Створити новий проєкт</a>
+            <ul class="project-list">
+                {% for project in projects %}
+                    <li class="project">
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                        {% endif %}
+                        <div class="button-group">
+                            <a href="{% url 'projects:project_update' project.pk %}" class="edit-btn btn">Змінити</a>
+                            <a href="{% url 'projects:project_delete' project.pk %}" class="delete-btn btn">Видалити</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <a href="{% url 'users:changepass' %}" class="btn">Змінити пароль</a>
+        <a href="{% url 'users:logout' %}" class="btn">Вийти</a>
     {% endif %}
+
+    <div id="contacts" class="section">
+        <h2>Контакти</h2>
+        <p>Телефон:380682706725</p>
+        <p>Електронна пошта:bohach.taras14@gmail.com</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Bohach Taras. Усі права захищені.</p>
+    </footer>
 </body>
 </html>
